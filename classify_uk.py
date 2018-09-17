@@ -1,11 +1,11 @@
 from sklearn.feature_extraction import DictVectorizer
 from sklearn.naive_bayes import MultinomialNB
-from sklearn.linear_model import LinearRegression, Lasso
+from sklearn.linear_model import LinearRegression, Lasso, LogisticRegression
 import pickle
 from sklearn.model_selection import cross_val_predict, cross_val_score
 from sklearn import metrics
 from sklearn import preprocessing
-
+from sklearn.svm import LinearSVC
 
 with open('uk_players_stats.pkl', 'rb') as p:
     players = pickle.load(p)
@@ -26,9 +26,9 @@ v = DictVectorizer(sparse=False)
 X = v.fit_transform(players)
 
 # CLASSIFY FOR POSITION
-classifiers = [MultinomialNB()] #,
-               # LinearSVC(),
-               # LogisticRegression()]
+classifiers = [MultinomialNB(),
+               LinearSVC(),
+               LogisticRegression()]
 
 for clf in classifiers:
     clf.fit(X, y)
