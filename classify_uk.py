@@ -6,6 +6,7 @@ from sklearn.model_selection import cross_val_predict, cross_val_score
 from sklearn import metrics
 from sklearn import preprocessing
 from sklearn.svm import LinearSVC
+from numpy.matlib import average
 
 with open('uk_players_stats.pkl', 'rb') as p:
     players = pickle.load(p)
@@ -42,5 +43,5 @@ regression = [LinearRegression(),
               Lasso()]
 
 for clf in regression:
-    score = cross_val_score(clf, X, y, cv=10)
-    print(score)
+    score = cross_val_score(clf, X, y, scoring='neg_mean_squared_error', cv=10)
+    print(average(score))
